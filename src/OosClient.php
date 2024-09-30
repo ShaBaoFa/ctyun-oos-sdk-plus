@@ -2540,6 +2540,9 @@ class OosClient
         $signable_query_string_params['X-Amz-SignedHeaders'] = $signedHeaders;
         $signable_query_string_params['X-Amz-Credential'] = $akCredentialScope;
         $signable_query_string_params['X-Amz-Expires'] = $expires;
+        if ($this->securityToken) {
+            $signable_query_string_params['X-Amz-Security-Token'] = $this->securityToken;
+        }
 
         if (isset($options[OosClient::OOS_LIMITRATE])) {
             $signable_query_string_params[OosClient::OOS_LIMITRATE] = $options[OosClient::OOS_LIMITRATE];
@@ -2576,7 +2579,11 @@ class OosClient
             . '&X-Amz-Signature=' . $signatureResult
             . '&X-Amz-SignedHeaders=' . $signedHeaders
             . '&X-Amz-Credential=' . $akCredentialScope
+            . '&X-Amz-Credential=' . $akCredentialScope
             . '&X-Amz-Expires=' . $expires;
+        if ($this->securityToken) {
+            $signed_url .= '&X-Amz-Security-Token=' . $this->securityToken;
+        }
         if (isset($options[OosClient::OOS_LIMITRATE])) {
             $signed_url .= '&' . OosClient::OOS_LIMITRATE . '=' . $options[OosClient::OOS_LIMITRATE];
         }
