@@ -4,7 +4,7 @@
     "license": "MIT",
     "keywords": [
         "php",
-        "hyperf"
+        "ctyun"
     ],
     "description": "Improvement ctyun-oos-sdk",
     "autoload": {
@@ -18,8 +18,7 @@
         }
     },
     "require": {
-        "php": ">=8.0",
-        "ext-simplexml": "*"
+        "php": ">=8.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
@@ -43,8 +42,5 @@
         "cs-fix": "php-cs-fixer fix $1"
     },
     "extra": {
-        "hyperf": {
-            "config": "Wlfpanda1012\\CtyunOosSdkPlus\\ConfigProvider"
-        }
     }
 }
