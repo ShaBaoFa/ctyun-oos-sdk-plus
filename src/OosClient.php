@@ -2773,6 +2773,9 @@ class OosClient
         uksort($headers, 'strnatcasecmp');
 
         foreach ($headers as $header_key => $header_value) {
+            if(is_int($header_value)){
+                $header_value = (string)$header_value;
+            }
             $header_value = str_replace(["\r", "\n"], '', $header_value);
             if ($header_value !== '' || $header_key === self::OOS_ACCEPT_ENCODING) {
                 $request->add_header($header_key, $header_value);
