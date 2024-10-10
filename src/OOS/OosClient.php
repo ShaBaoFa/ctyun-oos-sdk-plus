@@ -2393,9 +2393,7 @@ class OosClient
             . $signedHeaders . "\n"
             . $payload;
 
-        logger("\n\n===PHP AWS4Signer Calculated canonicalString: ======\n" . $canonicalRequest . "\n=============\n");
         $canonicalRequestHash = hash("sha256",$canonicalRequest,false);
-        logger("\n\n=======canonicalRequestHash:=========\n" . $canonicalRequestHash . "\n=======================\n");
 
         $curDate = gmdate('Ymd');
         $credentialScope = $curDate . "/" . $region . "/" . $service . "/" . self::OOS_REQUEST_NAME;
@@ -2404,9 +2402,7 @@ class OosClient
         $string_to_sign = self::OOS_HMAC_SHA256 . "\n"
             . $curDateTime8601 . "\n" . $credentialScope . "\n" . $canonicalRequestHash;
 
-        logger("\n\n=======string_to_sign_ordered:=========\n" . $string_to_sign . "\n=======================\n");
         $signatureResult = $this->computeSignature($curDate,$region,$service,$string_to_sign);
-        logger("\n\n=======php signatureResult:=========\n" . $signatureResult . "\n=======================\n");
 
         //将签名信息添加到Authorization标头的伪代码如下
         //Authorization: algorithm Credential=ak/credential_scope, SignedHeaders=SignedHeaders, Signature=signature
@@ -2598,7 +2594,6 @@ class OosClient
         // Sort the strings to be signed.
         $string_to_sign_ordered = $this->stringToSignSorted($string_to_sign);
 
-        logger("\nphp S3Signer canonicalString:================\n" . $string_to_sign_ordered . "\n=======================\n");
 
         $signature = base64_encode(hash_hmac('sha1', $string_to_sign_ordered, $this->accessKeySecret, true));
         $request->add_header('Authorization', 'AWS ' . $this->accessKeyId . ':' . $signature);
