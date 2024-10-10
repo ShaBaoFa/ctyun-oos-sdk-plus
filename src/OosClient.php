@@ -2013,8 +2013,12 @@ class OosClient
         if (! isset($options[self::OOS_HEADERS])) {
             $options[self::OOS_HEADERS] = [];
         }
-        $content = self::ACCESS_KEY_ACTION . '=' . self::GET_SESSION_TOKEN
-        . '&' . self::DURATION_SECONDS . '=' . isset($options[self::DURATION_SECONDS]) ? $options[self::DURATION_SECONDS] : 3600;
+        $content = self::ACCESS_KEY_ACTION . '=' . self::GET_SESSION_TOKEN;
+        if (isset($options[self::DURATION_SECONDS])) {
+            $content .= '&' . self::DURATION_SECONDS . '=' . $options[self::DURATION_SECONDS];
+        } else {
+            $content .= '&' . self::DURATION_SECONDS . '=' . 3600;
+        }
         if (isset($options[self::POLICY_DOCUMENT])) {
             $content .= '&' . self::POLICY_DOCUMENT . '=' . urlencode($options[self::POLICY_DOCUMENT]);
         }
